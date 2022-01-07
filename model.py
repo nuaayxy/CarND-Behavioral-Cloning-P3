@@ -6,15 +6,15 @@ import matplotlib.pyplot as plt
 
 import os
 import csv
+from sklearn.model_selection import train_test_split
+train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 
 samples = []
-with open('./driving_log.csv') as csvfile:
+with open('./data/new/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
     for line in reader:
         samples.append(line)
 
-from sklearn.model_selection import train_test_split
-train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 
 import cv2
 import numpy as np
@@ -52,12 +52,14 @@ ch, row, col = 3, 80, 320  # Trimmed image format
 
 model = Sequential()
 # Preprocess incoming data, centered around zero with small standard deviation 
-model.add(Lambda(lambda x: x/127.5 - 1.,
+model.add(Lambda(lambda x: x/255.0 - 0.5,
         input_shape=(ch, row, col),
         output_shape=(ch, row, col)))
 
 
 #model.add(... finish defining the rest of your model architecture here ...)
+model.add(Cropping2D(cropping=((70,25),(0,0))))
+model.add()
 
 model.compile(loss='mse', optimizer='adam')
 model.fit_generator(train_generator, 
