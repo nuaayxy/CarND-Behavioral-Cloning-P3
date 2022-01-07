@@ -1,24 +1,19 @@
+from tensorflow import keras
 from keras.models import Sequential, Model
-from keras.layers import Lambda
-
-from keras.models import Model
+from keras.layers import Lambda, Cropping2D, Dense, Flatten, Convolution2D
 import matplotlib.pyplot as plt
+from random import shuffle
 
 import os
 import csv
 from sklearn.model_selection import train_test_split
-train_samples, validation_samples = train_test_split(samples, test_size=0.2)
-
-samples = []
-with open('./data/new/driving_log.csv') as csvfile:
-    reader = csv.reader(csvfile)
-    for line in reader:
-        samples.append(line)
-
-
 import cv2
 import numpy as np
+from numpy import ceil
 import sklearn
+# import np.random.shuffle as shuffle
+
+
 
 def generator(samples, batch_size=32):
     num_samples = len(samples)
@@ -41,6 +36,38 @@ def generator(samples, batch_size=32):
             y_train = np.array(angles)
             yield sklearn.utils.shuffle(X_train, y_train)
 
+samples = []
+
+
+with open('./data/new/driving_log.csv') as csvfile:
+    reader = csv.reader(csvfile)
+    for line in reader:
+        samples.append(line)
+
+#data augementation by using left and right images
+# can also add flip image and negating steering
+# with open(csv_file, 'r') as f:
+#     reader = csv.reader(f)
+#     for row in reader:
+#         steering_center = float(row[3])
+
+#         # create adjusted steering measurements for the side camera images
+#         correction = 0.2 # this is a parameter to tune
+#         steering_left = steering_center + correction
+#         steering_right = steering_center - correction
+
+#         # read in images from center, left and right cameras
+#         path = "..." # fill in the path to your training IMG directory
+#         img_center = process_image(np.asarray(Image.open(path + row[0])))
+#         img_left = process_image(np.asarray(Image.open(path + row[1])))
+#         img_right = process_image(np.asarray(Image.open(path + row[2])))
+
+#         # add images and angles to data set
+#         car_images.extend(img_center, img_left, img_right)
+#         steering_angles.extend(steering_center, steering_left, steering_right)
+
+train_samples, validation_samples = train_test_split(samples, test_size=0.2)
+
 # Set our batch size
 batch_size=32
 
@@ -56,10 +83,16 @@ model.add(Lambda(lambda x: x/255.0 - 0.5,
         input_shape=(ch, row, col),
         output_shape=(ch, row, col)))
 
-
 #model.add(... finish defining the rest of your model architecture here ...)
 model.add(Cropping2D(cropping=((70,25),(0,0))))
-model.add()
+model.add(Convolution2D(24,5,5,subsample=(2,2),activation = 'relu'))
+model.add(Convolution2D(48,5,5,subsample=(2,2), activation='relu'))
+model.add(Convolution2D(64,3,3,subsample=(2,2), activation='relu'))
+model.add(Convolution2D(64,3,3,subsample=(2,2), activation='relu'))
+model.add(Flatten())
+model.add(Dense(100))
+model.add(Dense(50))
+model.add(Dense(10))
 
 model.compile(loss='mse', optimizer='adam')
 model.fit_generator(train_generator, 
@@ -68,44 +101,22 @@ model.fit_generator(train_generator,
             validation_steps=ceil(len(validation_samples)/batch_size), 
             epochs=5, verbose=1)
 
-with open(csv_file, 'r') as f:
-    reader = csv.reader(f)
-    for row in reader:
-        steering_center = float(row[3])
 
-        # create adjusted steering measurements for the side camera images
-        correction = 0.2 # this is a parameter to tune
-        steering_left = steering_center + correction
-        steering_right = steering_center - correction
 
-        # read in images from center, left and right cameras
-        path = "..." # fill in the path to your training IMG directory
-        img_center = process_image(np.asarray(Image.open(path + row[0])))
-        img_left = process_image(np.asarray(Image.open(path + row[1])))
-        img_right = process_image(np.asarray(Image.open(path + row[2])))
+# history_object = model.fit_generator(train_generator, samples_per_epoch =
+#     len(train_samples), validation_data = 
+#     validation_generator,
+#     nb_val_samples = len(validation_samples), 
+#     nb_epoch=5, verbose=1)
 
-        # add images and angles to data set
-        car_images.extend(img_center, img_left, img_right)
-        steering_angles.extend(steering_center, steering_left, steering_right)
+# ### print the keys contained in the history object
+# print(history_object.history.keys())
 
-history_object = model.fit_generator(train_generator, samples_per_epoch =
-    len(train_samples), validation_data = 
-    validation_generator,
-    nb_val_samples = len(validation_samples), 
-    nb_epoch=5, verbose=1)
-
-### print the keys contained in the history object
-print(history_object.history.keys())
-
-### plot the training and validation loss for each epoch
-plt.plot(history_object.history['loss'])
-plt.plot(history_object.history['val_loss'])
-plt.title('model mean squared error loss')
-plt.ylabel('mean squared error loss')
-plt.xlabel('epoch')
-plt.legend(['training set', 'validation set'], loc='upper right')
-plt.show()
-
-# set up lambda layer
-model = Sequential()
-model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
+# ### plot the training and validation loss for each epoch
+# plt.plot(history_object.history['loss'])
+# plt.plot(history_object.history['val_loss'])
+# plt.title('model mean squared error loss')
+# plt.ylabel('mean squared error loss')
+# plt.xlabel('epoch')
+# plt.legend(['training set', 'validation set'], loc='upper right')
+# plt.show()
