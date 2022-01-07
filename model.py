@@ -30,6 +30,10 @@ def generator(samples, batch_size=32):
                 center_angle = float(batch_sample[3])
                 images.append(center_image)
                 angles.append(center_angle)
+                #flip image and augmentation
+                images.append(cv2.flip(center_image,1))
+                angles.append(-center_angle)
+
 
             # trim image to only see section with road
             X_train = np.array(images)
@@ -75,7 +79,7 @@ batch_size=32
 train_generator = generator(train_samples, batch_size=batch_size)
 validation_generator = generator(validation_samples, batch_size=batch_size)
 
-ch, row, col = 3, 80, 320  # Trimmed image format
+ch, row, col = 3, 160, 320  # Trimmed image format
 
 model = Sequential()
 # Preprocess incoming data, centered around zero with small standard deviation 
