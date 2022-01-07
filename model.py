@@ -26,8 +26,8 @@ def generator(samples, batch_size=32):
             images = []
             angles = []
             for batch_sample in batch_samples:
-                name = './IMG/'+batch_sample[0].split('/')[-1]
-                center_image = cv2.imread(name)
+                name = './data/IMG/'+batch_sample[0].split('/')[-1]
+                # center_image = cv2.imread(name)
                 center_image = ndimage.imread(name)
                 center_angle = float(batch_sample[3])
                 images.append(center_image)
@@ -45,7 +45,7 @@ def generator(samples, batch_size=32):
 samples = []
 
 
-with open('./data/new/driving_log.csv') as csvfile:
+with open('./data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
     for line in reader:
         samples.append(line)
@@ -92,8 +92,8 @@ model.add(Cropping2D(cropping=((70,25),(0,0))))
 model.add(Convolution2D(24,5,5,subsample=(2,2),activation = 'relu'))
 model.add(Convolution2D(36,5,5,subsample=(2,2), activation='relu'))
 model.add(Convolution2D(48,5,5,subsample=(2,2), activation='relu'))
-model.add(Convolution2D(64,3,3,subsample=(2,2), activation='relu'))
-model.add(Convolution2D(64,3,3,subsample=(2,2), activation='relu'))
+model.add(Convolution2D(64,3,3, activation='relu'))
+model.add(Convolution2D(64,3,3, activation='relu'))
 model.add(Flatten())
 model.add(Dense(100))
 model.add(Dense(50))
