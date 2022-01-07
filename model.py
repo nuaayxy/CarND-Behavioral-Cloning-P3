@@ -107,6 +107,8 @@ model.fit_generator(train_generator,
             validation_steps=ceil(len(validation_samples)/batch_size), 
             epochs=5, verbose=1)
 
+model.save("model.h5")
+
 
 
 # history_object = model.fit_generator(train_generator, samples_per_epoch =
