@@ -23,6 +23,10 @@ My project includes the following files:
 * model.h5 containing a trained convolution neural network 
 * writeup.md or writeup.pdf summarizing the results
 
+
+https://user-images.githubusercontent.com/8016115/148632725-50e3b18e-c34e-4b4d-8995-9b69fd443249.mp4
+
+
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
 ```sh
@@ -39,8 +43,9 @@ The model.py file contains the code for training and saving the convolution neur
 
 My model consists of a convolution neural network the same as the nivida model
 
-
+![Screenshot from 2022-01-07 21-28-00](https://user-images.githubusercontent.com/8016115/148632741-d4bf02ab-9ba9-49e5-b48e-01827e85a767.png)
 #### 2. Attempts to reduce overfitting in the model
+
 
 The model was trained and validated on different data sets to ensure that the model was not overfitting  The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
