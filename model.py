@@ -26,7 +26,7 @@ def generator(samples, batch_size=32):
             images = []
             angles = []
             for batch_sample in batch_samples:
-                name = './data/IMG/'+batch_sample[0].split('/')[-1]
+                name = './data/data/IMG/'+batch_sample[0].split('/')[-1]
                 # center_image = cv2.imread(name)
                 center_image = ndimage.imread(name)
                 center_angle = float(batch_sample[3])
@@ -35,6 +35,29 @@ def generator(samples, batch_size=32):
                 #flip image and augmentation
                 images.append(cv2.flip(center_image,1))
                 angles.append(-center_angle)
+                #         # create adjusted steering measurements for the side camera images
+#         correction = 0.2 # this is a parameter to tune
+#         steering_left = steering_center + correction
+#         steering_right = steering_center - correction
+                name = './data/data/IMG/'+batch_sample[1].split('/')[-1]
+                # center_image = cv2.imread(name)
+                left_image = ndimage.imread(name)
+                left_angle = center_angle + 0.2 
+                images.append(left_image)
+                angles.append(left_angle)
+                #flip image and augmentation
+                images.append(cv2.flip(left_image,1))
+                angles.append(-left_angle)
+                
+                name = './data/data/IMG/'+batch_sample[2].split('/')[-1]
+                # center_image = cv2.imread(name)
+                right_image = ndimage.imread(name)
+                right_angle = center_angle - 0.2 
+                images.append(right_image)
+                angles.append(right_angle)
+                #flip image and augmentation
+                images.append(cv2.flip(right_image,1))
+                angles.append(-right_angle)
 
 
             # trim image to only see section with road
@@ -45,7 +68,7 @@ def generator(samples, batch_size=32):
 samples = []
 
 
-with open('./data/driving_log.csv') as csvfile:
+with open('./data/data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
     for line in reader:
         samples.append(line)
@@ -105,7 +128,7 @@ model.fit_generator(train_generator,
             steps_per_epoch=ceil(len(train_samples)/batch_size), 
             validation_data=validation_generator, 
             validation_steps=ceil(len(validation_samples)/batch_size), 
-            epochs=5, verbose=1)
+            epochs=10, verbose=1)
 
 model.save("model.h5")
 
