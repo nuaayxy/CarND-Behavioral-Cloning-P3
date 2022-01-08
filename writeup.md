@@ -51,6 +51,7 @@ The model was trained and validated on different data sets to ensure that the mo
 
 IMage is fliped and steering is negated to add more training data 
 left/right image is also used as well to avoid overfitting 
+Dropout can also be added but it is not included here since the model runs ok.
 
 #### 3. Model parameter tuning
 
