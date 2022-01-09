@@ -122,6 +122,7 @@ model.add(Dense(100))
 model.add(Dense(50))
 model.add(Dense(10))
 model.add(Dense(1))
+model.summary()
 
 model.compile(loss='mse', optimizer='adam')
 model.fit_generator(train_generator, 

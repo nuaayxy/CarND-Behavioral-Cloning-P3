@@ -70,6 +70,7 @@ For details about how I created the training data, see the next section.
 The final model architecture is the same as the nvidia model
 Here is a visualization of the architecture 
 
+![Screenshot from 2022-01-07 21-28-00](https://user-images.githubusercontent.com/8016115/148632741-d4bf02ab-9ba9-49e5-b48e-01827e85a767.png)
 
 #### 2. Creation of the Training Set & Training Process
 

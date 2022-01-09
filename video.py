@@ -1,3 +1,5 @@
+import os
+# os.environ["IMAGEIO_FFMPEG_EXE"] = "/bin/ffmpeg"
 from moviepy.editor import ImageSequenceClip
 import argparse
 import os
