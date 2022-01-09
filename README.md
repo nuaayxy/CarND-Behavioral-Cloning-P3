@@ -93,3 +93,4 @@ I used this training data for training the model. The validation set helped dete
 ### More discussion
 1. Potential improvement can be made if we preload Nvidia model's weights which have been trained on huge amount of data then just retrain the last few fully connected layer. In that case we can fully use the power of transfer learning
 2. We can also collect more data with different tracks and scene to generalize the model so it wont overfit on this specific loop, For example also use the other track Udacity provided
+3. Temporal information is not used in the cnn model, but if we stack a sequence of images and use the temporal information and change the input size of Input for example, we can have a sequence of 5 images, 160x320x15 size of input as training input, potentially will help to improve the robustness
