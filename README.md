@@ -79,8 +79,11 @@ Here is a visualization of the architecture
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. 
 ![1](https://user-images.githubusercontent.com/8016115/148671903-d88fcb94-638d-470e-b23e-b9d6075ec9bd.png)
+
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to adjust the steering when it is shifted to the edge. To augment the data sat, I also flipped images and angles.I finally randomly shuffled the data set and put 20% of the data into a validation set. 
+
 ![3](https://user-images.githubusercontent.com/8016115/148671909-cab6f5f4-9b9f-43d3-8f3e-39403b91406c.png)
+
 I also tried to collect some data while driving the oppsite direction of the track just so it can generalize the training data
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. 
  The ideal number of epochs was 10
