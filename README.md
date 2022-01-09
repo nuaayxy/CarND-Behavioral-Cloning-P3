@@ -1,6 +1,6 @@
 # **Behavioral Cloning** 
 
-## Writeup Template
+## Writeup
 
 **Behavioral Cloning Project**
 
@@ -41,8 +41,8 @@ The model.py file contains the code for training and saving the convolution neur
 
 #### 1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network the same as the nivida model
-
+My model consists of a convolution neural network the same as the nivida model, the imput size which is 160x320 which is customizable because of training data iamge size. Then all weights of the nvidia model is trained from scratch. The idea is to use transfer learning and utilize a network that is established and have proven to work so that we can train and iterate use our own data. 
+![model](https://user-images.githubusercontent.com/8016115/148671689-75e0c4fc-401f-44a8-877b-3a9d5eb36468.png)
 ![Screenshot from 2022-01-07 21-28-00](https://user-images.githubusercontent.com/8016115/148632741-d4bf02ab-9ba9-49e5-b48e-01827e85a767.png)
 #### 2. Attempts to reduce overfitting in the model
 
@@ -63,14 +63,17 @@ Training data was chosen to keep the vehicle driving on the road. I used a combi
 
 For details about how I created the training data, see the next section. 
 
+### DISCUSSION 
 ### Model Architecture and Training Strategy
 
 #### 1. Final Model Architecture
 
-The final model architecture is the same as the nvidia model
+
+The final model architecture is the same as the nvidia model. The imput size which is 160x320 which is customizable because of training data iamge size. Then all weights of the nvidia model is trained from scratch. The idea is to use transfer learning and utilize a network that is established and have proven to work so that we can train and iterate use our own data. 
 Here is a visualization of the architecture 
 
 ![Screenshot from 2022-01-07 21-28-00](https://user-images.githubusercontent.com/8016115/148632741-d4bf02ab-9ba9-49e5-b48e-01827e85a767.png)
+![model](https://user-images.githubusercontent.com/8016115/148671689-75e0c4fc-401f-44a8-877b-3a9d5eb36468.png)
 
 #### 2. Creation of the Training Set & Training Process
 
@@ -78,3 +81,9 @@ To capture good driving behavior, I first recorded two laps on track one using c
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to adjust the steering when it is shifted to the edge. To augment the data sat, I also flipped images and angles.I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 10
+
+
+
+### More discussion
+1. Potential improvement can be made if we preload Nvidia model's weights which have been trained on huge amount of data then just retrain the last few fully connected layer. In that case we can fully use the power of transfer learning
+2. We can also collect more data with different tracks and scene to generalize the model so it wont overfit on this specific loop, For example also use the other track Udacity provided
